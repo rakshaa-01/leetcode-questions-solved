@@ -5,21 +5,21 @@ public:
         if(n<2) {
             return 0;
         }
-        vector<int> prefixMax(n), suffixMax(n);
-        int sum=0, prefixSum=0, suffixSum=0;
-        
-        for(int i=0; i<arr.size(); i++) {
-            prefixSum=max(prefixSum, arr[i]);
-            prefixMax[i]=prefixSum;
+        int left=0, right=n-1, res=0, maxLeft=0, maxRight=0;
+        while(left<=right) {
+            if(arr[left]<=arr[right]) {
+                if(arr[left]>=maxLeft) maxLeft=arr[left];
+                else
+                    res+=maxLeft-arr[left];
+                left++;
+            }
+            else {
+                if(arr[right]>=maxRight) maxRight=arr[right];
+                else
+                    res+=maxRight-arr[right];
+                right--;
+            }
         }
-        for(int i=n-1; i>=0; i--) {
-            suffixSum=max(suffixSum, arr[i]);
-            suffixMax[i]=suffixSum;
-        }
-        
-        for(int i=1; i<n-1; i++) {
-            sum+=min(prefixMax[i], suffixMax[i])-arr[i];
-        }
-        return sum;
+        return res;
     }
 };
