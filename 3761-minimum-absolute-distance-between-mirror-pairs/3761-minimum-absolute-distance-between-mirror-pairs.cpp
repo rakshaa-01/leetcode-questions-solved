@@ -1,22 +1,25 @@
 class Solution {
     int find(int num)
     {
-        while(num%10 == 0)
-            num /= 10;
-        string n = to_string(num);
-        reverse(n.begin(), n.end());
-        return stoi(n);
+        int rev=0;
+        while(num) {
+            int rem=num%10;
+            rev=rev*10+rem;
+            num=num/10;
+        }
+        return rev;
     }
 public:
     int minMirrorPairDistance(vector<int>& nums) {
         unordered_map<int, int> mp;
         int ans = INT_MAX;
-        for(int i = 0; i < nums.size(); i++)
+        int g=0;
+        for(auto& num: nums)
         {
-            if(mp.count(nums[i]))
-                ans = min(ans, abs(i - mp[nums[i]]));
-            int reverseNum = find(nums[i]);
-            mp[reverseNum] = i;
+            if(mp.count(num))
+                ans = min(ans, abs(g - mp[num]));
+            int reverseNum = find(num);
+            mp[reverseNum] = g++;
         }
         return ans == INT_MAX ? -1 : ans;
     }
