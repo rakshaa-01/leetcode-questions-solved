@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int countTriples(int n) {
+        int cnt=0;
+        for(int a=1; a<=n; a++) {
+            for(int b=1; b<=n; b++) {
+                int sum=a*a+b*b;
+                int sqr=sqrt(sum);
+
+                if(sqr<=n && sqr*sqr==sum) cnt++;
+            }
+        }
+        return cnt;
+    }
+};
