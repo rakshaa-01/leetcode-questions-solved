@@ -1,6 +1,32 @@
 class Solution {
 public:
     vector<int> countMentions(int numberOfUsers, vector<vector<string>>& events) {
+        // sort(events.begin(), events.end(), [](const vector<string>& a, const vector<string>& b) {
+        //     return a[1] < b[1];
+        // });
+
+        sort(events.begin(), events.end(),
+    [](const std::vector<std::string>& a, const std::vector<std::string>& b) {
+        int na = std::stoi(a[1]);
+        int nb = std::stoi(b[1]);
+
+        if (na != nb)
+            return na < nb;                    // primary sort: numeric value
+
+        // secondary sort when a[1] == b[1]
+        if (a[0] == "OFFLINE" && b[0] != "OFFLINE")
+            return true;                       // OFFLINE goes first
+        if (a[0] != "OFFLINE" && b[0] == "OFFLINE")
+            return false;
+
+        return false; // equal or no special handling
+    }
+);
+
+        for(auto& e: events) {
+            cout<<e[0]<<"-"<<e[1]<<"-"<<e[2]<<endl;
+        }
+
         vector<int> ans(numberOfUsers, 0);
         vector<int> offline(numberOfUsers, 0); //0 other than considered as offline
         for(int i=0; i<events.size(); i++) {
