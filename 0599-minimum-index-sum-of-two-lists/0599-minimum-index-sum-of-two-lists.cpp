@@ -9,18 +9,19 @@ public:
         for(auto& p: mp1) cout<<p.first<<"-"<<p.second<<endl;
         
         int mini=INT_MAX;
-        unordered_map<string, int> mp2;
+        vector<string> ans;
         for(int i=0; i<list2.size(); i++) {
             string s=list2[i];
-            if(mp1.find(s)!=mp1.end() && (mp1[s]+i)<=mini) {
-                mp2[s]=mp1[s]+i;
-                mini=mp1[s]+i;
+            if(mp1.find(s)!=mp1.end()) {
+                if(mp1[s]+i<mini) {
+                    ans.clear();
+                    ans.push_back(s);
+                    mini=mp1[s]+i;
+                }
+                else if(mp1[s]+i==mini) {
+                    ans.push_back(s);
+                }
             }
-        }
-        vector<string> ans;
-        for(auto& p: mp2) {
-            if(p.second==mini)
-                ans.push_back(p.first);
         }
         return ans;
     }
